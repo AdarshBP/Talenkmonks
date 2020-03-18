@@ -1,4 +1,4 @@
-global.environment = 'development';
+global.environment = 'production';
 
 var config = {
 
@@ -16,13 +16,14 @@ var config = {
     },
     production: {
         //url to be used in link generation
-        url: 'http://my.site.com',
+        url: 'http://localhost:8000',
         //mongodb connection settings
         database: {
-            host: 'sql2.freesqldatabase.com',
-            user: 'sql2321059',
-            password: 'yK2!xR2*',
-            database: 'sql2321059',
+            host: '192.168.1.11',
+            user: 'adarsh',
+            port: '8457',
+            password: 'password',
+            database: 'job',
             timezone: 'Z'
         }
 

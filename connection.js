@@ -7,6 +7,7 @@ console.log("you are in "+environment + " environment");
 var con=mysql.createConnection({
     host    : config.database.host,
     user    : config.database.user,
+    port    : config.database.port,
     password: config.database.password,
     database: config.database.database,
     timezone: config.database.timezone

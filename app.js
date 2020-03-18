@@ -10,7 +10,7 @@ const clientRoutes  = require ('./routes/clientRoutes');
 
 const app = express();
 app.set('view engine','ejs');
-app.set('port',(process.env.PORT || 8000))
+app.set('port',(process.env.PORT || 3001))
 
 
 app.use(bodyParser.urlencoded({extend:false}));
