@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome <%= sessionData.empName %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script>
+     $(document).ready(function(){   
+      $('.JoineeData').addClass("active");
+     }); 
+  </script>
+
+</head>
+<body>
+  <%- include('navbar.ejs') %>
+<br>
+  
+<div class="responsive">
+<table class="table  table-hover table-responsive">
+  <thead class="thead-dark">
+  <tr> 
+      <th>SNO</th>
+      <th>client_name</th>
+      <th>candidate_name</th>
+      <th>job_title</th>
+      <th>offered_ctc</th>
+      <th>joining_date</th>
+      <th>experience</th>
+      <th>email_id</th>   
+      <th>phone_number</th>
+      <th>invoice_ref</th>
+      <th>invoice_date</th>
+      <th>invoice_value</th>
+      <th>invoice_realisation</th>
+      <th>receipt_date</th>
+  </tr>
+</thead>
+<tbody>
+  <% result.forEach((item)=>{ %>  
+      <tr>
+          <td class= "SNO"><%= item.SNO %></td>
+          <td class= "client_name"><%= item.client_name %></td>
+          <td class= "name"><%= item.name %></td> 
+          <td class= "job_titile"><%= item.job_titile %></td>
+          <td class= "offered_ctc"><%= item.offered_ctc %></td>
+          <td class= "joining_date"><%= item.joining_date %></td> 
+          <td class= "experience"><%= item.experience %></td>  
+          <td class= "email_id"><%= item.email_id %></td>
+          <td class= "phone_number"><%= item.phone_number %></td>   
+          <td class= "invoice_ref"><%= item.invoice_ref %></td>  
+          <td class= "invoice_date"><%= item.invoice_date %></td> 
+          <td class= "invoice_value"><%= item.invoice_value %></td> 
+          <td class= "invoice_realisation"><%= item.invoice_realisation %></td> 
+          <td class= "receipt_date"><%= item.receipt_date %></td>     
+      </tr>
+
+<%});%> 
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,39 @@
+      $(".delete_button").click(function () {
+        $('#addCandidateModal').modal('show');
+
+        //$("#form-SNO").prop("readonly", true);
+       // $('#popupchange :input').prop('readonly', true);
+        var currentRow = $(this).closest('tr');
+          
+        var SNO = currentRow.find(".SNO").text();
+        var name = currentRow.find(".name").text();
+        var job_title = currentRow.find(".job_title").text();
+        var email_id = currentRow.find(".email_id").text();
+        var mobile = currentRow.find(".mobile").text();
+        var current_location = currentRow.find(".current_location").text();
+        var qualification = currentRow.find(".qualification").text();
+        var Experience = currentRow.find(".Experience").text();
+        var ctc = currentRow.find(".ctc").text();
+        var ectc = currentRow.find(".ectc").text();
+        var notice_period = currentRow.find(".notice_period").text();
+        var date_of_sharing = currentRow.find(".date_of_sharing").text();
+        var notes = currentRow.find(".notes").text();
+
+        date_of_sharing = new Date(date_of_sharing).toISOString().slice(0, 10);
+
+        $('#form-SNO').val(SNO);
+        $('#form-name').val(name);
+        $('#form-email').val(email_id);
+        $('#form-job_title').val(job_title);
+        $('#form-mobile').val(mobile);
+        $('#form-current_location').val(current_location);
+        $('#form-qualification').val(qualification);
+        $('#form-Experience').val(Experience);
+        $('#form-ctc').val(ctc);
+        $('#form-ectc').val(ectc);
+        $('#form-notice_period').val(notice_period);
+        $('#form-date_of_sharing').val(date_of_sharing);
+        $('#form-notes').val(notes);
+
+        $('.popupchange').prop("action","/admin/DeleteCandidate");
+      });

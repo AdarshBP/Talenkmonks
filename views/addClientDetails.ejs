@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Welcome <%= sessionData.name%></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+    integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/instantverification.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+  
+  <script>
+    function form_vaildation() {
+        input = Array.prototype.slice.call(document.getElementsByClassName('c-form-input')).filter(item => item
+            .type !==
+            'submit' && item.type !== 'checkbox');
+
+        input.forEach(item => {
+            if (item.type !== 'submit' && item.type !== 'checkbox') {
+                //add event listener for input
+                item.addEventListener('input', function (e) {
+                    target = item.id;
+                    // console.log(document.getElementById(target).validity.valid);
+                    checkConditiontoEnableSubmitButton()
+                    const valid = document.getElementById(target).validity.valid;
+                    if (valid) {
+                        document.getElementById(`${target}-error`).classList.remove('invalid');
+                        document.getElementById(`${target}-error`).removeAttribute('role');
+                        document.getElementById(target).setAttribute('aria-invalid', 'false');
+                    } else {
+                        document.getElementById(`${target}-error`).classList.add('invalid');
+                        document.getElementById(`${target}-error`).setAttribute('role', 'alert');
+                        document.getElementById(target).setAttribute('aria-invalid', 'true');
+                        //console.log(document.getElementById(target));
+                    }
+                });
+            }
+        });
+    }
+
+    function checkConditiontoEnableSubmitButton() {
+        input = Array.prototype.slice.call(document.getElementsByClassName('c-form-input')).filter(item => item
+            .type !==
+            'submit' && item.type !== 'checkbox');
+        $(".submitchanges").prop("disabled", false);
+        input.forEach(item => {
+            if (!document.getElementById(item.id).validity.valid)
+                $(".submitchanges").prop("disabled", true);
+        });
+
+    }
+
+    $(document).ready(function () {
+        var today = new Date().toISOString().slice(0, 10);
+        
+        $('#addCandidateModal').modal('show');
+        $(".submitchanges").prop("disabled", true);
+        
+        $('#form-agreement_date').val(today);
+        
+
+        form_vaildation();
+        $('.submitchanges').click(() => {
+            console.log(" submit changes clicked ");
+            Swal.fire({
+                title: 'Are you sure ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit the details '
+            }).then((result) => {
+                console.log(result.value)
+                if (result.value) {
+                    Swal.fire(
+                        'Success!',
+                        'Success details have been saved in our database ',
+                        'success'
+                    )
+                    $('.popupchange').submit();
+                }
+            })
+        })
+
+    });
+</script>
+</head>
+
+<body>
+  <%- include('navbar.ejs') %>
+  
+
+  <br>
+  <!-------------------------------------------- the pop up modal -------------------------------------->
+  <div class="container">
+    <div class="row">
+        <div>
+
+            <div class="modal fade" id="addCandidateModal" tabindex="-1" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Please Add your details</h4>
+                            <button class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+
+                            
+                            <form class="popupchange" action="/client/addClientDetails" method="post" >
+                          
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input class="form-control " id="form-name" type="text" name="name"
+                                         value="<%=sessionData.Session_name%>" readonly />
+                                    <span class="u-alert" id="form-name-error">Please enter a valid name with
+                                        alphabets only</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email </label>
+                                    <input class="form-control " id="form-email" type="email"
+                                        name="email" value="<%=sessionData.Session_email_id%>" required="required" readonly pattern=".{3,}" />
+                                    <span class="u-alert" id="form-email-error">Please enter a valid email
+                                        format</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Client ID</label>
+                                    <input class="form-control c-form-input" id="client_id" type="text" name="client_id"/>
+                                </div>
+                                
+                               
+                                <div class="form-group">
+                                    <label for="address"><span class="c-form-label">address</label>
+                                    <textarea class="form-control" id="form-notes" maxlength="200" rows="4"
+                                        name="address"></textarea>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="gst_no">gst_no</label>
+                                    <input class="form-control c-form-input" id="form-gst_no" type="text"
+                                        name="gst_no"  required />
+                                    <span class="u-alert" id="form-gst_no-error">Please enter a gst no </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="agreement_ref">agreement_ref</label>
+                                    <input class="form-control c-form-input" id="form-agreement_ref" type="text"
+                                        name="agreement_ref" required />
+                                    <span class="u-alert" id="form-agreement_ref-error">Please enter a valid agreement_ref</span>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label for="agreement_date">agreement_date</label>
+                                    <input class="form-control c-form-input" id="form-agreement_date" type="date"
+                                        name="agreement_date" required />
+                                    <span class="u-alert" id="form-agreement_date-error">This field cannot be
+                                        blanked</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="commision">commision</label>
+                                    <input class="form-control c-form-input" id="form-commision" type="text"
+                                        name="commision"  required />
+                                    <span class="u-alert" id="form-commision-error">This field cannot be
+                                        blanked</span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="pay_period_days">pay_period_days</label>
+                                    <input class="form-control c-form-input" id="form-pay_period_days" type="text"
+                                        name="pay_period_days" required />
+                                    <span class="u-alert" id="form-pay_period_days-error">This field cannot be
+                                        blanked</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="repl_period_days">repl_period_days</label>
+                                    <input class="form-control c-form-input" id="form-repl_period_days" type="text" name="repl_period_days"
+                                        required />
+                                    <span class="u-alert" id="form-repl_period_days-error">This field cannot be
+                                        blanked</span>
+                                </div>  
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary submitchanges">Save Changes</button>
+                            <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------------------------- end of the modal part  ------------------------------------------>
+
+</body>
+
+</html>

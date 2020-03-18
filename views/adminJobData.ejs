@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome <%= sessionData.empName %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/css/instantverification.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script>
+  
+    function form_vaildation() {
+        input = Array.prototype.slice.call(document.getElementsByClassName('c-form-input')).filter(item => item
+            .type !==
+            'submit' && item.type !== 'checkbox');
+
+        input.forEach(item => {
+            if (item.type !== 'submit' && item.type !== 'checkbox') {
+                //add event listener for input
+                item.addEventListener('input', function (e) {
+                    target = item.id;
+                    // console.log(document.getElementById(target).validity.valid);
+                    checkConditiontoEnableSubmitButton()
+                    const valid = document.getElementById(target).validity.valid;
+                    if (valid) {
+                        document.getElementById(`${target}-error`).classList.remove('invalid');
+                        document.getElementById(`${target}-error`).removeAttribute('role');
+                        document.getElementById(target).setAttribute('aria-invalid', 'false');
+                    } else {
+                        document.getElementById(`${target}-error`).classList.add('invalid');
+                        document.getElementById(`${target}-error`).setAttribute('role', 'alert');
+                        document.getElementById(target).setAttribute('aria-invalid', 'true');
+                        //console.log(document.getElementById(target));
+                    }
+                });
+            }
+        });
+    }
+
+    function checkConditiontoEnableSubmitButton() {
+        input = Array.prototype.slice.call(document.getElementsByClassName('c-form-input')).filter(item => item
+            .type !==
+            'submit' && item.type !== 'checkbox');
+        $(".submitchanges").prop("disabled", false);
+        input.forEach(item => {
+            if (!document.getElementById(item.id).validity.valid)
+                $(".submitchanges").prop("disabled", true);
+        });
+
+    }
+
+
+    $(document).ready(function(){   
+        $('.JobData').addClass("active");
+
+        $(".add_job_data").click(function () {
+          $('#addJobModal').modal('show');
+          $(".live_status").prop("hidden", true);
+          $(".submitchanges").prop("disabled", true);
+          $("#form-SNO").prop("disabled", true);
+          $('.modal-title').text("Add the new JOB data");         
+          $(".submitchanges").prop("disabled", true);
+          var today = new Date().toISOString().slice(0, 10);       
+          $('#form-date_of_posting').val(today);
+          form_vaildation(); 
+          $('.popupchange').prop("action","/admin/addJobDetails");
+        });
+        
+        $(".edit_button").click(function () {
+        $(".live_status").prop("hidden", false);
+        $('#addJobModal').modal('show');
+        form_vaildation();
+        
+        $('.modal-title').text("Edit the new changes required");
+        $(".live_status").prop("hidden", false);
+        //$("#form-SNO").prop("readonly", true);
+        var currentRow = $(this).closest('tr');
+            
+        var SNO = currentRow.find(".SNO").text();
+        var client_id = currentRow.find(".client_id").text();
+        var client_name = currentRow.find(".client_name").text();
+        var job_title = currentRow.find(".job_title").text();
+        var job_id_key = currentRow.find(".job_id_key").text();
+        var job_desc = currentRow.find(".job_desc").text();
+        var date_of_posting = currentRow.find(".date_of_posting").text();
+        var no_of_position = currentRow.find(".no_of_position").text();
+        var no_of_cadidates_offered= currentRow.find(".no_of_cadidates_offered").text();
+        var live_status = currentRow.find(".STATUS").text();
+   
+        
+        date_of_posting = new Date(date_of_posting).toISOString().slice(0, 10);
+
+        $('#form-SNO').val(SNO);
+        $('#form-client_id').val(client_id);
+        $('#form-client_name').val(client_name);
+        $('#form-job_title').val(job_title);
+        $('#form-job_id_key').val(job_id_key);
+        $('#form-job_desc').val(job_desc);
+        $('#form-date_of_posting').val(date_of_posting);
+        $('#form-no_of_position').val(no_of_position);
+        $('#form-no_of_cadidates_offered').val(no_of_cadidates_offered);
+        $('#form-live_status').val(live_status);
+        
+
+      $('.popupchange').prop("action","/admin/EditJob");
+   
+      });
+
+        $(".delete_button").click(function () {
+        $(".live_status").prop("hidden", false);
+        $('#addJobModal').modal('show');
+        form_vaildation();
+        $(".submitchanges").prop("disabled", false);
+        $('.modal-title').text("confirm before deleting the data")
+        //$("#form-SNO").prop("readonly", true);
+        var currentRow = $(this).closest('tr');
+            
+        var SNO = currentRow.find(".SNO").text();
+        var client_id = currentRow.find(".client_id").text();
+        var client_name = currentRow.find(".client_name").text();
+        var job_title = currentRow.find(".job_title").text();
+        var job_id_key = currentRow.find(".job_id_key").text();
+        var job_desc = currentRow.find(".job_desc").text();
+        var date_of_posting = currentRow.find(".date_of_posting").text();
+        var no_of_position = currentRow.find(".no_of_position").text();
+        var no_of_cadidates_offered= currentRow.find(".no_of_cadidates_offered").text();
+        var live_status = currentRow.find(".STATUS").text();
+   
+        
+        date_of_posting = new Date(date_of_posting).toISOString().slice(0, 10);
+
+        $('#form-SNO').val(SNO);
+        $('#form-client_id').val(client_id);
+        $('#form-client_name').val(client_name);
+        $('#form-job_title').val(job_title);
+        $('#form-job_id_key').val(job_id_key);
+        $('#form-job_desc').val(job_desc);
+        $('#form-date_of_posting').val(date_of_posting);
+        $('#form-no_of_position').val(no_of_position);
+        $('#form-no_of_cadidates_offered').val(no_of_cadidates_offered);
+        $('#form-live_status').val(live_status);
+
+        
+
+      $('.popupchange').prop("action","/admin/DeleteJob");
+   
+      });
+   
+        $('.submitchanges').click(() => {
+            console.log(" submit changes clicked ");
+            Swal.fire({
+                title: 'Are you sure ?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit the details '
+            }).then((result) => {
+                console.log(result.value)
+                if (result.value) {
+                    Swal.fire(
+                        'Success!',
+                        'Success details have been saved in our database ',
+                        'success'
+                    )
+                    $('.popupchange').submit();
+                }
+            })
+        })
+
+     }); 
+
+    
+    function Popup(type)
+      {
+        if (type == "success")
+        {
+          Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your Work has been saved successfully',
+        showConfirmButton: false,
+        timer: 2500
+        })
+        }else if (type == "failed"){
+        Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'failed!! check the network or server is down',
+        showConfirmButton: false,
+        timer: 3500
+        })
+      }
+      }
+  
+    
+  </script>
+
+</head>
+<body>
+  <%- include('navbar.ejs') %>
+<br>
+  <% if(message == "failure")
+  {%>
+  <script>Popup("failed")</script>
+  <%} else if (message == "success"){%>
+  <script>Popup("success")</script>
+  <%}%>
+  
+  <div class="container-fluid">
+    <button class="btn btn-success add_job_data">ADD DATA</button>
+  <table class="table  table-hover responsive ">
+  <thead class="thead-dark">
+  <tr> 
+      <th>SNO</th>
+      <th>ID</th>
+      <th>name</th>
+      <th>job_title</th>
+      <th>job_id_key</th>
+      <th>job_desc</th>
+      <th>date_of_posting</th>
+      <th>no_of_position</th>
+      <th>no_of_cadidates_offered</th>   
+      <th>STATUS</th>
+      <th>EDIT</th>
+  </tr>
+</thead>
+<tbody>
+  <% result.forEach((item)=>{ %>  
+      <tr>
+        <td class= "SNO"><%= item.SNO %></td>
+          <td class= "client_id"><%= item.client_id %></td>
+          <td class= "client_name"><%= item.client_name %></td>
+          <td class= "job_title"><%= item.job_title %></td> 
+          <td class= "job_id_key"><%= item.job_id_key %></td>
+          <td class= "job_desc"><%= item.job_desc %></td>
+          <td class= "date_of_posting"><%= item.date_of_posting %></td> 
+          <td class= "no_of_position"><%= item.no_of_position %></td>  
+          <td class= "no_of_cadidates_offered"><%= item.no_of_cadidates_offered %></td>
+          <td class= "STATUS"><%= item.live_status %></td>  
+          <td>
+            <button class="btn btn-primary edit_button" data-target="#alterModel">EDIT</button>
+            <button class="btn btn-danger delete_button" data-target="#alterModel" >DELETE</button>
+          </td>    
+      </tr>
+
+<%});%> 
+</div>
+</body>
+<!-------------------------------------------- the pop up modal -------------------------------------->
+<div class="container">
+  <div class="row">
+      <div>
+
+          <div class="modal fade" id="addJobModal" tabindex="-1" data-backdrop="static">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Please Add JOB details</h4>
+                          <button class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+
+                          
+                          <form class="popupchange" action="/client/addClientDetails" method="post" >
+                            <div class="form-group">                              
+                              <input class="form-control " id="form-SNO" type="text" name="SNO" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="client_name">Client Name</label>
+                                <!-- <input class="form-control c-form-input" id="form-client_name" type="text" name="client_name" required/> -->
+                                    <select class="form-control c-form-input" id="form-client_name" name="client_name"  required>
+                                        <% Allclientname.forEach((item)=>{ %>   
+                                      <option value="<%= item.client_name %>"><%= item.client_name %></option>
+                                      <%});%> 
+                                    </select> 
+                                    <span class="u-alert" id="form-name-error">Please select a valid name with
+                                        alphabets only</span>
+                            </div>
+                            <div class="form-group">
+                              <label for="client_id">Client ID</label>
+                              <input class="form-control c-form-input" id="form-client_id" type="text" name="client_id" required/>
+                              <span class="u-alert" id="form-client_id-error">This field cannot be blank</span>
+                          </div>
+                              
+                              <div class="form-group">
+                                  <label for="job_id_key">job_id_key </label>
+                                  <input class="form-control c-form-input" id="form-job_id_key" type="text"
+                                      name="job_id_key" required="required"  />
+                                  <span class="u-alert" id="form-job_id_key-error">Please enter a valid ID value (Numbers)</span>
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="job_title">job_title</label>
+                                <input class="form-control " id="form-job_title" type="text"
+                                    name="job_title"  />
+                                <span class="u-alert" id="form-job_title-error">This field cannot be blank</span>
+                            </div>
+                              <div class="form-group">
+                                  <label for="job_desc"><span class="c-form-label">job_desc</label>
+                                  <textarea class="form-control" id="form-job_desc" maxlength="200" rows="4"
+                                      name="job_desc"></textarea>
+                                    <span class="u-alert" id="form-job_desc-error">Please add description</span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="date_of_posting">date_of_posting</label>
+                                  <input class="form-control c-form-input" id="form-date_of_posting" type="date"
+                                      name="date_of_posting"  required />
+                                  <span class="u-alert" id="form-date_of_posting-error">Please enter posting date </span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="no_of_position">no_of_position</label>
+                                  <input class="form-control c-form-input" id="form-no_of_position" type="number"
+                                      name="no_of_position" required />
+                                  <span class="u-alert" id="form-no_of_position-error">Please enter a valid number</span>
+                              </div>
+
+
+
+                              <div class="form-group">
+                                  <label for="no_of_cadidates_offered">no_of_cadidates_offered</label>
+                                  <input class="form-control " id="form-no_of_cadidates_offered" type="number"
+                                      name="no_of_cadidates_offered" value="0" />
+                                  <span class="u-alert" id="form-no_of_cadidates_offered-error">Please enter a valid number</span>
+                              </div>
+
+
+                              <div class="form-group live_status" >
+                                <label for="live_status">live_status</label>
+                                <select class="form-control" id="form-live_status" name="live_status">
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select> 
+                            </div> 
+                         
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-primary submitchanges">Save Changes</button>
+                          <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!---------------------------------- end of the modal part  ------------------------------------------>
+
+
+</html>

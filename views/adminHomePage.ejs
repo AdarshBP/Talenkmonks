@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome <%= sessionData.empName %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script>
+    // $(document).ready(function(){   
+    //   $('.ApproveRequests').addClass("active");
+    // }); 
+  </script>
+
+</head>
+<body>
+  <%- include('navbar.ejs') %>
+<br>
+  
+  
+<div>
+  <table class="table table-responsive table-hover  ">
+      <thead class="thead-dark">
+      <tr> 
+          <th>name</th>
+          <th>job_title</th>
+          <th>email_id</th>
+          <th>mobile</th>
+          <th>current_location</th>
+          <th>qualification</th>
+          <th>Experience</th>
+          <th>ctc</th>   
+          <th>ectc</th>
+          <th>notice_period</th>
+          <th>date_of_sharing</th>
+          <th>notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <% result.forEach((item)=>{ %>  
+          <tr>
+              <td class= "name"><%= item.name %></td>
+              <td class= "job_title"><%= item.job_title %></td>
+              <td class= "email_id"><%= item.email_id %></td>
+              <td class= "mobile"><%= item.mobile %></td> 
+              <td class= "current_location"><%= item.current_location %></td>
+              <td class= "qualification"><%= item.qualification %></td>
+              <td class= "Experience"><%= item.Experience %></td> 
+              <td class= "ctc"><%= item.ctc %></td>  
+              <td class= "ectc"><%= item.ectc %></td>
+              <td class= "notice_period"><%= item.notice_period %></td> 
+              <td class= "date_of_sharing"><%= item.date_of_sharing %></td> 
+              <td class= "notes"><%= item.notes %></td>   
+              
+          </tr>
+
+ <%});%> 
+</body>
+
+
+</html>

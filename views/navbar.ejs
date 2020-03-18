@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">TalentMonks</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if(sessionData.Session_role == 'A'){ %>
+      <li class="nav-item">
+        <a class="nav-link CandidateData " href="/admin/CandidateData"><i class="fas fa-users"></i></i> Candidate
+          Data</a></li>
+      <li class="nav-item">
+        <a class="nav-link JobData " href="/admin/JobData"><i class="fas fa-users"></i></i> Job Data</a></li>
+      <li class="nav-item">
+        <a class="nav-link ClientData " href="/admin/ClientData"><i class="fas fa-users"></i></i> Client Data</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link JoineeData " href="/admin/JoineeData"><i class="fas fa-users"></i></i> Joinee Data</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link ApproveRequests " href="/admin/ChangePassword"><i class="fas fa-users"></i></i> Change
+          Password</a></li>
+      <%}%>
+
+      <% if(sessionData.Session_role == 'C'){ %>
+
+      <li class="nav-item">
+        <a class="nav-link ApproveRequests " href="/client/ClientData"><i class="fas fa-users"></i></i> My Data</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link ApproveRequests " href="/client/AddClientData"><i class="fas fa-users"></i></i> Add Data</a>
+      </li>
+
+      <%}%>
+
+      <% if(sessionData.Session_role == 'U'){ %>
+
+        <li class="nav-item">
+          <a class="nav-link ApproveRequests " href="/user/CandidateData"><i class="fas fa-users"></i></i> My Data</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link ApproveRequests " href="/user/AddCandidateData"><i class="fas fa-users"></i></i> Add Data</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link ApproveRequests " href="/user/CandidateJOBData"><i class="fas fa-users"></i></i> Job Offered</a>
+        </li>
+  
+        <%}%>
+
+      <li class="nav-item">
+        <a class="nav-link Contact" href="/contactUs"><i class="fa fa-envelope"></i> Contact</a>
+      </li>
+
+      <!-- Dropdown -->
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          <i class="fas fa-user-circle"></i> Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/profile">Profile</a>
+          <a class="dropdown-item" href="/logOut">LogOut</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+    <li class="nav-item  ">
+      <a class="nav-link active side-nav" ></i> Welcome <%= sessionData.Session_name %></a>
+      </li>
+    </ul>
+  </div>
+</nav>
